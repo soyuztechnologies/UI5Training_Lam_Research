@@ -1,0 +1,157 @@
+<html>
+
+<head>
+
+    <style>
+        .avengers {
+            width: 200px;
+            float: left;
+        }
+
+        .spiderman {
+            color: blue;
+            border: 1px solid black;
+            text-align: center;
+        }
+
+        .superman {
+            background-color: yellow;
+            font-weight: bolder;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            border: 1px solid black;
+            padding: 4px;
+            height: 140px;
+        }
+
+        /* #idfn{
+                background-color: beige;
+            } */
+
+        img{
+            float:left;
+            height: 150px;
+            margin: 5px;
+            opacity: 0.4;
+        }
+
+        img:hover{
+            opacity:1;
+            border: 8px solid red;
+        }
+
+        td,th{
+            border: 1px solid black;
+        }
+        table{
+            border-collapse: collapse;
+        }
+
+        input:focus {
+            background-color: blueviolet;
+        }
+
+        #songs th{
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+            font-weight: bolder;
+            color:brown;
+            background-color: deeppink;
+        }
+        #songs tr:nth-child(even){
+            background-color: coral;
+        }
+        #songs tr:nth-child(odd){
+            background-color: white;
+        }
+
+    </style>
+
+
+</head>
+
+<body style="background-color: aqua;">
+
+    <div class="avengers">
+        <div class="spiderman">
+            <h3>What is HTML5?</h3>
+        </div>
+        <div class="superman">
+            <p>HTML stands for hyper text markup language, used to create static web content</p>
+        </div>
+    </div>
+
+    <div class="avengers">
+        <div class="spiderman">
+            <h3>What is CSS</h3>
+        </div>
+        <div class="superman">
+            <p>CSS stands for Cascading Style Sheets, used to format and beautify html content</p>
+        </div>
+    </div>
+
+    <div class="avengers">
+        <div class="spiderman">
+            <h3>What is JS</h3>
+        </div>
+        <div class="superman">
+            <p>JS stands for Java Script, used to program the web pages</p>
+        </div>
+    </div>
+
+    <div style="clear: left;"></div>
+
+    <table id="songs">
+        <thead>
+            <th>Song Name</th>
+            <th>Aritst</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Maa Tujhe Salam</td>
+                <td>A R Rehman</td>
+            </tr>
+            <tr>
+                <td>Tu bhooja jise</td>
+                <td>K K</td>
+            </tr>
+            <tr>
+                <td>Tu bhooja jise</td>
+                <td>K K</td>
+            </tr>
+            <tr>
+                <td>Tu bhooja jise</td>
+                <td>K K</td>
+            </tr>
+            <tr>
+                <td>Tu bhooja jise</td>
+                <td>K K</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+
+    <div style="clear: left;"></div>
+
+    <div class="myImg">
+        <img src="https://globetrender.com/wp-content/uploads/2016/04/01.-Heydar-Aliyev-Center-Baku_photo-by-Hufton-Crow.jpg" width="30%" >
+    </div>
+
+    <div class="myImg">
+        <img src="https://sites.google.com/site/mostamazingarchitectureever/_/rsrc/1468755500523/classic-architecture/Modern-Architecture-Float-Ecopolis-Lilypad-Image.jpg" width="30%" >
+    </div>
+
+    <div class="myImg"></div>
+        <img src="https://i.ytimg.com/vi/djRbwtkRS4M/maxresdefault.jpg" width="30%" >
+    </div>
+
+
+
+    <div style="clear: left;"></div>
+
+    <h3>Personal Details</h3>
+    <label>First name</label><input id="idfn">
+    <label>Last name</label><input id="idln">
+
+</body>
+
+</html>
