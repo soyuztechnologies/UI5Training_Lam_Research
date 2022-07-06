@@ -1,0 +1,131 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./mystyle.css">
+
+        <script>
+
+            function onAsync(){
+                
+                var oLabel = document.getElementById("idtest");
+                oLabel.innerHTML = "function started";
+
+
+                oLabel.innerHTML = oLabel.innerHTML + "\n" + "function Ended";
+            }
+
+            function onLogin(){
+                //Step 1: get the object of my fields
+                var oUser = document.getElementById("iduser");
+                //var oPwd = ;
+                //Step 2: get the value from those field objects
+                var sUserName = oUser.value;
+                //this is called Chaining concept
+                var sPassword = document.getElementById("idpwd").value;
+                //Step 3: compare if both are same
+                if(sUserName === sPassword){
+                    //Step 4: login done
+                    document.write("Login success ");
+                }else{
+                     //step 5: show error
+                    var oLabel = document.getElementById("idMsg");
+                    oLabel.innerHTML = "Login failed";
+                }
+                
+               
+            }
+
+            //internal JS
+            function callMe(){
+                //code inside here
+                //output function 1
+                //alert('welcome to js');
+                //output function 2
+                console.log("hey amigo!");
+                //output function 3
+                document.write("<h3 style='color:blue'>How are you!</h3>");
+            }
+            var check = false;
+            function onMagic(){
+
+                //Step 1: get all the content areas of box - superman
+                var aBoxElements = document.getElementsByClassName("superman");
+                //Step 2: Loop over each element
+                for(var i=0;i<aBoxElements.length;i++){
+                    //Step 3: Take each element and change its style
+                    var oElement = aBoxElements[i];
+                    if(check === false){
+                        oElement.style.backgroundColor = "black";
+                        oElement.style.color = "red";
+                        if(i === aBoxElements.length - 1){
+                            check = true;
+                        }                        
+                    }else{ 
+                        oElement.style.backgroundColor = "yellow";
+                        oElement.style.color = "black";
+                        if(i === aBoxElements.length - 1){
+                            check = false;
+                        }
+                    }
+                    
+                }
+ 
+            }
+        </script>
+    </head>
+    <body>  
+
+        
+ 
+        <div class="avengers">
+            <div class="spiderman">
+                <h3>What is HTML5?</h3>
+            </div>
+            <div class="superman">
+                <p>HTML stands for hyper text markup language, used to create static web content</p>
+            </div>
+        </div>
+    
+        <div class="avengers">
+            <div class="spiderman">
+                <h3>What is CSS</h3>
+            </div>
+            <div class="superman">
+                <p>CSS stands for Cascading Style Sheets, used to format and beautify html content</p>
+            </div>
+        </div>
+    
+        <div class="avengers">
+            <div class="spiderman">
+                <h3>What is JS</h3>
+            </div>
+            <div class="superman">
+                <p>JS stands for Java Script, used to program the web pages</p>
+            </div>
+        </div>
+    
+        <div style="clear: left;"></div>
+
+        <label style="font-weight:bolder" id="idtest"></label>
+
+        <table>
+            <tbody>
+                <tr>
+                    <td><label>User Name</label></td>
+                    <td><input id="iduser"></td>
+                </tr>
+                <tr>
+                    <td><label>password</label></td>
+                    <td><input type="password" id="idpwd"</td>
+                </tr>
+                <tr>
+                    <td><label style="color:red" id="idMsg"></label></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button onclick="onLogin()">Login</button>
+        <button onclick="callMe()">Login2</button>
+        <button onclick="onMagic()">Magic</button>
+        <button onclick="onAsync()">Async</button>
+    </body>
+</html>
