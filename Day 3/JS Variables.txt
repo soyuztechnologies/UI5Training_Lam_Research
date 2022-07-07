@@ -1,0 +1,59 @@
+var x = 10;
+X;
+x;
+typeof(x);
+x = "anubhav";
+typeof(x);
+x = "20"
+typeof(x)
+var y = parseInt(x)
+y
+x = false;
+typeof(x)
+
+
+var aFruits = ["Apple","Banana","Cherry"];
+aFruits
+aFruits[0]
+aFruits[aFruits.length - 1]
+for(var i=0; i<aFruits.length;i++){
+    var item = aFruits[i];
+    console.log(item);
+    
+}
+
+
+var name = "anubhav oberoi"
+name.split(" ")
+var aName = name.split(" ")
+aName
+aName[0]
+aName[0].concat(aName[1])
+name.indexOf("anubhav")
+name.indexOf("ananya")
+name.toUpperCase()
+
+
+var oEmp = {
+    "empId": 100,
+    "empName": "Anubhav",
+    "salary" : 9000,
+    "currency":"EUR"    
+}
+typeof(oEmp)
+oEmp.empId
+oEmp.empName = "Ananya"
+oEmp
+oEmp.smoker = false
+{
+	"empId": 100,
+	"empName": "Anubhav",
+	"salary": 9000,
+	"currency": "EUR",
+	"hobbies": ["cricket", "basketball", "movies"],
+	"books": {
+		"name": "abc"
+	}
+}
+
+
