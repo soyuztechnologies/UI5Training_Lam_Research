@@ -1,0 +1,25 @@
+<anubhav:View xmlns:anubhav="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+             xmlns:f="sap.ui.layout.form"
+              controllerName="spiderman.controller.Main">
+
+    <f:SimpleForm editable="true">
+        <f:content>
+            <Label text="Emp Id"></Label>
+            <Input id="idEmpId" width="20%" value="{/empStr/empId}"></Input>
+            <Label text="Emp Name"></Label>
+            <Input id="idEmpName" width="30%" value="{path: '/empStr/empName'}"></Input>
+            <Label text="Salary"></Label>
+            <Input id="idSal" width="30%"></Input>
+            <Label text="Currency"></Label>
+            <Input id="idCurr" width="10%"></Input>
+            <Label text="Smoker"></Label>
+            <CheckBox></CheckBox>
+            <Label></Label>
+            <Button text="Load Data" press="onLoader"></Button>
+        </f:content>
+    </f:SimpleForm>
+
+    <Button id="idx" text="Click Here" press="onClick"></Button>
+    <Button id="idx2" text="Click Another" press="onAnotherClick"></Button>
+    <t:Table></t:Table>
+</anubhav:View>
