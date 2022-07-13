@@ -1,0 +1,65 @@
+{
+	"empStr": {
+		"empId": 7000,
+		"empName": "Tirian",
+		"salary": 19500,
+		"currency": "EUR",
+		"smoker": false
+	},
+	"empTab": [{
+			"empId": 7001,
+			"empName": "Sarsi",
+			"salary": 5800,
+			"currency": "EUR",
+			"gender": "F",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 4,
+			"joinDate": "2022-02-10"
+		},
+		{
+			"empId": 7002,
+			"empName": "John Snow",
+			"salary": 8900,
+			"currency": "USD",
+			"gender": "M",
+			"smoker": true,
+			"mStat": "M",
+			"rating": 4,
+			"joinDate": "2022-02-10"
+		},
+		{
+			"empId": 7003,
+			"empName": "Alia",
+			"salary": 8800,
+			"currency": "AED",
+			"gender": "F",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 5,
+			"joinDate": "2022-02-11"
+		},
+		{
+			"empId": 7004,
+			"empName": "Ned Stark",
+			"salary": 3690,
+			"currency": "EUR",
+			"gender": "M",
+			"smoker": true,
+			"mStat": "M",
+			"rating": 3,
+			"joinDate": "2022-02-15"
+		},
+		{
+			"empId": 7005,
+			"empName": "Denierias",
+			"salary": 16000,
+			"currency": "INR",
+			"gender": "F",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 5,
+			"joinDate": "2022-02-21"
+		}
+	]
+}

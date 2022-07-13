@@ -1,0 +1,66 @@
+{
+	"empStr": {
+		"empId": 9595,
+		"empName": "Anubhav",
+		"salary": 9500,
+		"currency": "EUR",
+		"smoker": false
+	},
+	"empTab": [
+		{
+			"empId": 10,
+			"empName": "Anubhav",
+			"salary": 5000,
+			"currency": "EUR",
+			"gender":"https://png.pngtree.com/png-clipart/20190520/original/pngtree-business-male-icon-vector-png-image_4187852.jpg",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 4,
+			"joinDate": "2022-02-10"
+		},
+		{
+			"empId": 20,
+			"empName": "Sonia",
+			"salary": 3600,
+			"currency": "USD",
+			"gender":"https://flyclipart.com/thumb2/female-multicolor-girl-icon-with-png-and-vector-format-for-free-811588.png",
+			"smoker": false,
+			"mStat": "M",
+			"rating": 4,
+			"joinDate": "2022-02-10"
+		},
+		{
+			"empId": 30,
+			"empName": "Ananya",
+			"salary": 9000,
+			"currency": "AED",
+			"gender":"https://flyclipart.com/thumb2/female-multicolor-girl-icon-with-png-and-vector-format-for-free-811588.png",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 5,
+			"joinDate": "2022-02-11"
+		},
+		{
+			"empId": 40,
+			"empName": "Riyaz",
+			"salary": 9000,
+			"currency": "EUR",
+			"gender":"https://png.pngtree.com/png-clipart/20190520/original/pngtree-business-male-icon-vector-png-image_4187852.jpg",
+			"smoker": true,
+			"mStat": "M",
+			"rating": 3,
+			"joinDate": "2022-02-15"
+		},
+		{
+			"empId": 50,
+			"empName": "Srinivas",
+			"salary": 7800,
+			"currency": "INR",
+			"gender":"https://png.pngtree.com/png-clipart/20190520/original/pngtree-business-male-icon-vector-png-image_4187852.jpg",
+			"smoker": false,
+			"mStat": "S",
+			"rating": 5,
+			"joinDate": "2022-02-21"
+		}
+	]
+}

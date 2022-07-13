@@ -1,0 +1,69 @@
+<anubhav:View xmlns:anubhav="sap.ui.core.mvc" xmlns="sap.m" xmlns:t="sap.ui.table"
+             xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core"
+              controllerName="spiderman.controller.Main">
+
+    <f:SimpleForm editable="true" id="simpleForm">
+        <f:content>
+            <Label text="Emp Id"></Label>
+            <Input id="idEmpId" width="20%" value="{/empStr/empId}"></Input>
+            <Label text="Emp Name"></Label>
+            <Input id="idEmpName" width="30%" value="{path: '/empStr/empName'}"></Input>
+            <Label text="Salary"></Label>
+            <Input id="idSal" width="30%" enabled="{= ${/empStr/empName} === 'Anubhav' ? false : true}"></Input>
+            <Label text="Currency"></Label>
+            <Input id="idCurr" width="10%"></Input>
+            <Label text="Smoker"></Label>
+            <CheckBox></CheckBox>
+            <Label></Label>
+            <Button text="Load Data" press="onLoader"></Button>
+        </f:content>
+    </f:SimpleForm>
+
+    <Button id="idx" text="Click Here" press="onClick"></Button>
+    <Button id="idx2" text="Click Another" press="onAnotherClick"></Button>
+    <t:Table rows="{/empTab}">
+        <t:columns>
+            <t:Column label="Emp Id">
+                <t:template>
+                    <Text text="{empId}"></Text>
+                </t:template>
+            </t:Column>
+            <t:Column label="Emp Name">
+                <t:template>
+                    <Input value="{empName}"></Input>
+                </t:template>
+            </t:Column>
+            <t:Column label="Salary">
+                <t:template>
+                    <Text text="{salary} {currency}"></Text>
+                </t:template>
+            </t:Column>
+            <t:Column label="Salary">
+                <t:template>
+                    <Image src="{gender}" width="30px" height="30px"></Image>
+                </t:template>
+            </t:Column>
+            <t:Column label="Smoker">
+                <t:template>
+                    <CheckBox selected="{smoker}" />
+                </t:template>
+            </t:Column>
+            <t:Column label="Rating">
+                <t:template>
+                    <RatingIndicator value="{rating}" />
+                </t:template>
+            </t:Column>
+            <t:Column label="Status">
+                <t:template>
+                    <Select selectedKey="{mStat}">
+                        <items>
+                            <core:Item text="Single" key="S"></core:Item>
+                            <core:Item text="Married" key="M"></core:Item>
+                        </items>
+                    </Select>
+                </t:template>
+            </t:Column>
+        </t:columns>
+
+    </t:Table>
+</anubhav:View>
