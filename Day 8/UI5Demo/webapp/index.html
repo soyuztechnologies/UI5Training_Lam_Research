@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <!-- Bootstrap = to load sapui5 framework -->
+        <script src="https://sapui5.hana.ondemand.com/resources/sap-ui-core.js"
+                data-sap-ui-libs="sap.m"
+                data-sap-ui-theme="sap_fiori_3_dark"
+                data-sap-ui-bindingSyntax="complex"
+                data-sap-ui-resourceroots='{
+                    "spiderman":"./"
+                }'
+                ></script>
+
+        <script>
+            //var control = new library.class("id", { properties });
+
+
+            // var oView = new sap.ui.view({
+            //     viewName: "spiderman.view.Main",
+            //     type: "JS",
+            //     id: "idMain"
+            // });
+
+            var oViewXML = new sap.ui.view({
+                viewName: "spiderman.view.MyView",
+                type: "XML",
+                id: "idXMLV"
+            });
+
+            // oView.placeAt("content");
+            oViewXML.placeAt("content2");
+
+            
+
+            // oBtn.placeAt("content");
+        </script>
+      
+    </head>
+    <body class="sapUiBody">
+        <div id="content"></div>
+        <div id="content2"></div>
+    </body>
+</html>
