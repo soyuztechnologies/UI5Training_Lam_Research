@@ -1,0 +1,26 @@
+  method PRODUCTSET_GET_ENTITY.
+
+    data: ls_product type bapi_epm_product_header,
+          lv_prod_id type bapi_epm_product_id.
+
+    "Step 1: read the key passed by used from the browser
+    read TABLE IT_KEY_TAB INTO data(ls_key) INDEX 1.
+
+    lv_prod_id = ls_key-value.
+
+    "Step 2: Call the BAPI to load data
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_GET_DETAIL'
+      EXPORTING
+        product_id               = lv_prod_id
+     IMPORTING
+        HEADERDATA               = ls_product
+*     TABLES
+*       CONVERSION_FACTORS       =
+*       RETURN                   =
+              .
+
+    "Step 3: Transfer data from BAPI Structure to Output OData Structure
+    MOVE-CORRESPONDING ls_product to er_entity.
+
+
+  endmethod.

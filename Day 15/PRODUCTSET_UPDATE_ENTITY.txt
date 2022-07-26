@@ -1,0 +1,44 @@
+  method PRODUCTSET_UPDATE_ENTITY.
+
+
+    data: ls_entity    type zcl_zlam_ab_odata_mpc=>ts_product,
+          lv_prod_id type bapi_epm_product_id,
+          ls_bapi_prod type bapi_epm_product_header.
+
+    READ TABLE IT_KEY_TAB INTO data(ls_key) INDEX 1.
+
+    lv_prod_id = ls_key-value.
+
+    "Step 1: We receive the data from the UI
+    IO_DATA_PROVIDER->read_entry_data(
+      IMPORTING
+        es_data = ls_entity
+    ).
+    MOVE-CORRESPONDING ls_entity to ls_bapi_prod.
+    "Step 2: Pre-checks, pre-processing
+    "Step 3: Call BAPI to insert the data
+
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_CHANGE'
+      EXPORTING
+        product_id          = lv_prod_id                 " EPM: Product Id
+        headerdata          = ls_bapi_prod                 " EPM: Product header data of BOR object SEPM002
+        headerdatax         = value BAPI_EPM_PRODUCT_HEADERX( product_id = lv_prod_id
+                                      name = abap_true
+                                      description = abap_true
+                                      price = abap_true
+        )                 " EPM: Product header modif. info for BOR object 'EpmProduct'
+*        persist_to_db       = abap_true        " Flag: Save data to DB (yes/no)
+*      TABLES
+*        conversion_factors  =                  " EPM: Product conversion factor data of BOR object SEPM002
+*        conversion_factorsx =                  " EPM: Prod. conv. fact. modif. data for BOR-Objekt EpmProduct
+*        return              =                  " Return Parameter
+      .
+
+    "Step 4: Post checks
+    "Step 5: Send response
+    MOVE-CORRESPONDING ls_entity to er_entity.
+
+
+
+
+  endmethod.

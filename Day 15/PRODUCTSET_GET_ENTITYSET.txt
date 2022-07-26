@@ -1,0 +1,60 @@
+  method PRODUCTSET_GET_ENTITYSET.
+
+    data: lt_products type table of bapi_epm_product_header,
+          lv_top  type i,
+          lv_skip TYPE i,
+          lv_tot  type i,
+          ls_entity type zcl_zlam_ab_odata_mpc=>ts_product,
+          lt_filter_cat type table of BAPI_EPM_PRODUCT_CATEG_RANGE,
+          ls_filter_cat like LINE OF lt_filter_cat,
+          ls_row  type BAPI_EPM_MAX_ROWS.
+
+
+    lv_top = is_paging-top.
+    lv_skip = is_paging-skip.
+    lv_tot = lv_top + lv_skip.
+    ls_row-bapimaxrow = lv_tot.
+
+
+    read table it_filter_select_options INTO data(ls_filter) WITH key property = 'Category'.
+
+    IF sy-subrc = 0.
+
+      LOOP AT ls_filter-select_options INTO data(ls_filter_sop).
+
+        MOVE-CORRESPONDING ls_filter_sop to ls_filter_cat.
+        append ls_filter_cat to lt_filter_cat.
+
+      ENDLOOP.
+
+    ENDIF.
+
+
+    "Step 1: call our fm
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_GET_LIST'
+     EXPORTING
+       MAX_ROWS                    = ls_row
+     TABLES
+       HEADERDATA                  = lt_products
+*       SELPARAMPRODUCTID           =
+*       SELPARAMSUPPLIERNAMES       =
+        SELPARAMCATEGORIES          = lt_filter_cat
+*       RETURN                      =
+              .
+
+    IF lv_tot is NOT INITIAL.
+
+      LOOP AT lt_products INTO data(ls_products) from lv_skip + 1  to lv_tot.
+
+        MOVE-CORRESPONDING ls_products to ls_entity.
+        append ls_entity to et_entityset.
+
+      ENDLOOP.
+
+    else.
+      "Step 2: Move data from itab to our output
+      MOVE-CORRESPONDING lt_products to et_entityset.
+    ENDIF.
+
+
+  endmethod.

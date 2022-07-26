@@ -1,0 +1,18 @@
+  method PRODUCTSET_DELETE_ENTITY.
+
+    data lv_prod_id TYPE bapi_epm_product_id.
+
+    READ TABLE it_key_tab INTO data(ls_key) INDEX 1.
+
+    lv_prod_id = ls_key-value.
+
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_DELETE'
+      EXPORTING
+        product_id          = lv_prod_id
+*       PERSIST_TO_DB       = ABAP_TRUE
+*     TABLES
+*       RETURN              =
+              .
+
+
+  endmethod.

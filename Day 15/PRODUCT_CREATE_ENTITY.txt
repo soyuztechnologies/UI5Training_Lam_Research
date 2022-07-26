@@ -1,0 +1,48 @@
+  method PRODUCTSET_CREATE_ENTITY.
+
+    data: ls_entity    type zcl_zlam_ab_odata_mpc=>ts_product,
+          ls_bapi_prod type bapi_epm_product_header.
+
+    "Step 1: We receive the data from the UI
+    IO_DATA_PROVIDER->read_entry_data(
+      IMPORTING
+        es_data = ls_entity
+    ).
+    MOVE-CORRESPONDING ls_entity to ls_bapi_prod.
+    "Step 2: Pre-checks, pre-processing
+    "Step 3: Call BAPI to insert the data
+
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_CREATE'
+      EXPORTING
+        headerdata               = ls_bapi_prod
+*       PERSIST_TO_DB            = ABAP_TRUE
+*     TABLES
+*       CONVERSION_FACTORS       =
+*       RETURN                   =
+              .
+
+    "Step 4: Post checks
+    "Step 5: Send response
+    MOVE-CORRESPONDING ls_entity to er_entity.
+
+
+  endmethod.
+
+
+POST 	/sap/opu/odata/sap/ZLAM_AB_ODATA_SRV/ProductSet
+Payload
+
+{
+        "ProductId": "LM-1010",
+        "TypeCode": "PR",
+        "Category": "Notebooks",
+        "Name": "Notebook Professional 15",
+        "Description": "something",
+        "SupplierId": "100000051",
+        "SupplierName": "TECUM",
+        "TaxTarifCode": 1,
+        "MeasureUnit": "EA",
+        "Price": "1999.0000",
+        "CurrencyCode": "EUR",
+        "DimUnit": "CM"
+}
