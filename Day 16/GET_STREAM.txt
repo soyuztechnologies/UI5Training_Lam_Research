@@ -1,0 +1,37 @@
+  method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~GET_STREAM.
+
+    data: lv_prod_id type bapi_epm_product_id,
+          ls_header  type bapi_epm_product_header,
+          ls_media   type ty_s_media_resource.
+
+    READ TABLE it_key_tab INTO data(ls_key) INDEX 1.
+    lv_prod_id = ls_key-value.
+
+    CALL FUNCTION 'BAPI_EPM_PRODUCT_GET_DETAIL'
+      EXPORTING
+        product_id               = lv_prod_id
+     IMPORTING
+       HEADERDATA               = ls_header
+*     TABLES
+*       CONVERSION_FACTORS       =
+*       RETURN                   =
+              .
+
+
+    cl_mime_repository_api=>get_api( )->get(
+      EXPORTING
+        i_url                  = ls_header-product_pic_url                 " Object URL
+      IMPORTING
+        e_content              = ls_media-value                 " Object Contents
+        e_mime_type            = ls_media-mime_type                 " MIME Type
+    ).
+
+
+    me->copy_data_to_ref(
+      EXPORTING
+        is_data = ls_media
+      CHANGING
+        cr_data = ER_STREAM
+    ).
+
+  endmethod.

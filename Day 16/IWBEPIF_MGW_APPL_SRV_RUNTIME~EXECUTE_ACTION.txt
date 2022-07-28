@@ -1,0 +1,45 @@
+  method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~EXECUTE_ACTION.
+
+  data: lv_cat type snwd_pd-category,
+        lv_prod_id type bapi_epm_product_id,
+        ls_header type bapi_epm_product_header,
+        ls_entity type zcl_zlam_ab_odata_mpc=>ts_product.
+
+  read TABLE IT_PARAMETER INTO data(ls_param) with key name = 'I_CATEGORY'.
+  lv_cat = ls_param-value.
+
+
+  CASE IV_ACTION_NAME.
+    WHEN 'GetMostExpensiveProduct'.
+
+      select single product_id into @lv_prod_id from snwd_pd
+        where price = ( select max( price ) from snwd_pd where category = @lv_cat ).
+
+      CALL FUNCTION 'BAPI_EPM_PRODUCT_GET_DETAIL'
+        EXPORTING
+          product_id               = lv_prod_id
+        IMPORTING
+          HEADERDATA               = ls_header
+*       TABLES
+*         CONVERSION_FACTORS       =
+*         RETURN                   =
+                .
+
+      MOVE-CORRESPONDING ls_header to ls_entity.
+
+    WHEN 'GetMostCheapestProduct'.
+    WHEN OTHERS.
+  ENDCASE.
+
+
+
+  me->copy_data_to_ref(
+    EXPORTING
+      is_data = ls_entity
+    CHANGING
+      cr_data = ER_DATA
+  ).
+
+
+
+  endmethod.

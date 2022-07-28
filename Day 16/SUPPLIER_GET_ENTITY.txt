@@ -1,0 +1,72 @@
+  method SUPPLIERSET_GET_ENTITY.
+
+    data: ls_bp      type bapi_epm_bp_header,
+          lv_bp_id   type bapi_epm_bp_id,
+          ls_header  type bapi_epm_product_header,
+          lv_prod_id type bapi_epm_product_id,
+
+          lt_return  type table of bapiret2.
+
+    "Step 1: read the key passed by used from the browser
+    read TABLE IT_KEY_TAB INTO data(ls_key) with key name = 'BpId'.
+
+    IF sy-subrc = 0.
+      lv_bp_id = ls_key-value.
+    else.
+        read TABLE IT_KEY_TAB INTO ls_key with key name = 'ProductId'.
+
+        IF sy-subrc = 0.
+          lv_prod_id = ls_key-value.
+
+          CALL FUNCTION 'BAPI_EPM_PRODUCT_GET_DETAIL'
+            EXPORTING
+              product_id               = lv_prod_id
+           IMPORTING
+             HEADERDATA               = ls_header
+*           TABLES
+*             CONVERSION_FACTORS       =
+*             RETURN                   =
+                    .
+
+          lv_bp_id = ls_header-supplier_id.
+
+        ENDIF.
+    ENDIF.
+
+
+    IF lv_bp_id is INITIAL.
+      RAISE EXCEPTION type /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          message_unlimited      = 'The empty BP ID not allowed'
+      .
+    ENDIF.
+
+    "Step 2: Call the BAPI to load data
+    CALL FUNCTION 'BAPI_EPM_BP_GET_DETAIL'
+      EXPORTING
+        bp_id       = lv_bp_id                 " EPM: Business Partner ID to be used in BAPIs
+      IMPORTING
+        headerdata  = ls_bp                 " EPM: Business Partner header data ( BOR SEPM004 )
+      TABLES
+*        contactdata =                  " EPM: Business Partner contact data ( BOR SEPM004 )
+        return      = lt_return                 " Return Parameter
+      .
+
+
+    IF lt_return is NOT INITIAL.
+
+      me->mo_context->get_message_container( )->add_messages_from_bapi(
+        EXPORTING
+          it_bapi_messages          = lt_return
+      )..
+
+      RAISE EXCEPTION type /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          message_container      = me->mo_context->get_message_container( )
+      .
+    ENDIF.
+
+    "Step 3: Transfer data from BAPI Structure to Output OData Structure
+    MOVE-CORRESPONDING ls_bp to er_entity.
+
+  endmethod.

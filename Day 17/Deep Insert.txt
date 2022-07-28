@@ -1,0 +1,123 @@
+1. Define an Order and OrderItem entity type and sets
+2. Association 1..0.n between order and items To_Items
+3. MPC_EXT class and create a public data type TS_DEEP_ORDER
+  types:
+    BEGIN OF TS_DEEP_ORDER .
+        INCLUDE TYPE zcl_zlam_ab_odata_mpc=>ts_order.
+  TYPES: TO_ITEMS TYPE STANDARD TABLE OF zcl_zlam_ab_odata_mpc=>ts_orderitems WITH DEFAULT KEY,
+        END OF TS_DEEP_ORDER .
+4. DEFINE function, we attach newly created entity
+
+
+    me->model->get_entity_type( 'Order' )->bind_structure(
+      EXPORTING
+        iv_structure_name   = 'ZCL_ZLAM_AB_ODATA_MPC_EXT=>TS_DEEP_ORDER'
+*        iv_bind_conversions = abap_false       " Consider conversion exits
+    ).
+
+5. First create deep structure and fetch data to that with debug, later implemented whole code
+
+  method /IWBEP/IF_MGW_APPL_SRV_RUNTIME~CREATE_DEEP_ENTITY.
+
+    DATA: LS_DEEP_ENTITY TYPE ZCL_ZLAM_AB_ODATA_MPC_EXT=>TS_DEEP_ORDER,
+          ls_header type bapi_epm_so_header,
+          lt_items  type table of bapi_epm_so_item,
+          lv_ord_id type bapi_epm_so_id,
+          lt_return type table of bapiret2.
+
+
+    io_data_provider->read_entry_data(
+      IMPORTING
+        es_data = LS_DEEP_ENTITY
+    ).
+
+    MOVE-CORRESPONDING ls_deep_entity-to_items to lt_items.
+    MOVE-CORRESPONDING ls_deep_entity to ls_header.
+
+    clear : ls_header-changed_by, ls_header-created_by.
+
+    LOOP AT lt_items ASSIGNING FIELD-SYMBOL(<fs_item>).
+      CLEAR : <fs_item>-so_id, <fs_item>-so_item_pos, <fs_item>-currency_code.
+      <fs_item>-net_amount = 120.
+      <fs_item>-tax_amount = 20.
+      <fs_item>-currency_code =  ls_header-currency_code.
+      get TIME STAMP FIELD <fs_item>-delivery_date.
+    ENDLOOP.
+
+    ls_header-net_amount = 800.
+    ls_header-tax_amount = 92.
+    CALL FUNCTION 'BAPI_EPM_SO_CREATE'
+      EXPORTING
+        headerdata          = ls_header
+*       PERSIST_TO_DB       = ABAP_TRUE
+     IMPORTING
+       SALESORDERID        = lv_ord_id
+     TABLES
+       ITEMDATA            = lt_items
+       RETURN              = lt_return
+              .
+
+    READ TABLE lt_return with key type = 'E' TRANSPORTING NO FIELDS .
+
+    IF sy-subrc = 0.
+
+      me->mo_context->get_message_container( )->add_messages_from_bapi(
+        EXPORTING
+          it_bapi_messages          = lt_return
+      ).
+
+      RAISE EXCEPTION TYPE /iwbep/cx_mgw_busi_exception
+        EXPORTING
+          message_container      =  me->mo_context->get_message_container( )
+      .
+
+    ENDIF.
+
+    ls_deep_entity-so_id = lv_ord_id.
+
+    me->copy_data_to_ref(
+      EXPORTING
+        is_data = ls_deep_entity
+      CHANGING
+        cr_data = ER_DEEP_ENTITY
+    ).
+
+
+  endmethod.
+
+6. We copy postman request, with x-csrf-token and created a 
+POST http://103.207.171.202:8021/sap/opu/odata/sap/ZLAM_AB_ODATA_SRV/OrderSet
+
+{
+        "SoId": "",
+        "CreatedBy": "400000038",
+        "BuyerId": "100000002",
+        "BuyerName": "DelBont Industries",
+        "CurrencyCode": "EUR",
+        "GrossAmount": "827.95",
+        "LifecycleStatus": "N",
+        "To_Items": [
+                {
+                    "SoId": "500000010",
+                    "SoItemPos": "10",
+                    "ProductId": "HT-1070",
+                    "Note": "EPM DG: SO ID 0500000010 Item 0000000010",
+                    "CurrencyCode": "ARS",
+                    "GrossAmount": "168.74",
+                    "Quantity": "2",
+                    "QuantityUnit": "EA"
+                },
+                {
+                    "SoId": "500000010",
+                    "SoItemPos": "20",
+                    "ProductId": "HT-1071",
+                    "Note": "EPM DG: SO ID 0500000010 Item 0000000020",
+                    "CurrencyCode": "ZAR",
+                    "GrossAmount": "194.45",
+                    "Quantity": "2",
+                    "QuantityUnit": "EA"
+                }
+            ]
+}
+
+https://www.youtube.com/watch?v=T_l84Q3Y1hM

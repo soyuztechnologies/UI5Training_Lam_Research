@@ -1,0 +1,46 @@
+  method SUPPLIERSET_GET_ENTITYSET.
+
+
+    data: lt_bp   type table of bapi_epm_bp_header,
+          lv_top  type i,
+          lv_skip TYPE i,
+          lv_tot  type i,
+          ls_entity type zcl_zlam_ab_odata_mpc=>ts_supplier,
+          ls_row  type BAPI_EPM_MAX_ROWS.
+
+
+    lv_top = is_paging-top.
+    lv_skip = is_paging-skip.
+    lv_tot = lv_top + lv_skip.
+    ls_row-bapimaxrow = lv_tot.
+
+
+    "Step 1: call our fm
+    CALL FUNCTION 'BAPI_EPM_BP_GET_LIST'
+      EXPORTING
+        max_rows            = ls_row                 " EPM: Max row specifictation
+      TABLES
+*        selparambpid        =                  " EPM: Range for Business Partner IDs
+*        selparamcompanyname =                  " EPM: Range for Company name
+         bpheaderdata        = lt_bp                 " EPM: Business Partner header data ( BOR SEPM004 )
+*        bpcontactdata       =                  " EPM: Business Partner contact data ( BOR SEPM004 )
+*        return              =                  " Return Parameter
+      .
+
+    IF lv_tot is NOT INITIAL.
+
+      LOOP AT lt_bp INTO data(ls_bp) from lv_skip + 1  to lv_tot.
+
+        MOVE-CORRESPONDING ls_bp to ls_entity.
+        append ls_entity to et_entityset.
+
+      ENDLOOP.
+
+    else.
+      "Step 2: Move data from itab to our output
+      MOVE-CORRESPONDING lt_bp to et_entityset.
+    ENDIF.
+
+
+
+  endmethod.
