@@ -1,0 +1,87 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" 
+xmlns:l="sap.ui.layout"
+xmlns:f="sap.ui.layout.form"
+xmlns:core="sap.ui.core"
+controllerName="lam.fin.ar.controller.Order">
+    <Page title="Order (Deep Insert)">
+        <VBox class="sapUiSmallMargin">
+            <f:SimpleForm id="SimpleFormChange354"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                title="Create New Order"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false" >
+                <f:content>
+                    <Label text="Order Id" />
+                    <Input enabled="false" id="name" value="{}"/>
+                    <Label text="Buyer Id" />
+                    <Input value="{}" showValueHelp="true" valueHelpRequest="onF4Help"/>
+                    <Text text="{}" />
+                    <Label text="Amount / Currency" />
+                    <Input value="{}">
+                        <layoutData>
+                            <l:GridData span="XL1 L2 M2 S4" />
+                        </layoutData>
+                    </Input>
+                    <Input value="{}" />
+                </f:content>
+            </f:SimpleForm>
+            <Panel headerText="Order Items" expandable="true">
+                <Table id="idOrderTable" mode="Delete">
+                    <headerToolbar>
+                        <OverflowToolbar id="otbSubheader">
+                            <Title text="Order Items" level="H2" />
+                            <ToolbarSpacer />
+                            <Button id="addButton" text="Add" icon="sap-icon://add" type="Transparent"
+                                press="onAdd" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                     <columns>
+                        <Column >
+                            <Text text="Product" showValueHelp="true" valueHelpRequest="onF4Prod"/>
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true" >
+                            <Text text="Quantity" />
+                        </Column>
+                        <Column>
+                            <Text text="Price" />
+                        </Column>
+                        <Column minScreenWidth="Tablet" demandPopin="true" >
+                            <Text text="Note" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <HBox>
+                                    <Input />
+                                    <Text></Text>
+                                </HBox>                                
+                                <HBox>
+                                    <Input type="Number" width="90px"></Input>
+                                    <Input width="30px"></Input>
+                                </HBox>
+                                <HBox>
+                                    <Input type="Number" width="180px"></Input>
+                                    <Input width="40px"></Input>
+                                </HBox>
+                                <Input></Input>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Panel>
+        </VBox>
+    </Page>
+</mvc:View>
