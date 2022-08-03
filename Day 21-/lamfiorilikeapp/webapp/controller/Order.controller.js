@@ -10,7 +10,39 @@ sap.ui.define([
     'use strict';
     return BaseController.extend("lam.fin.ar.controller.Order",{
         onInit: function(){
-            
+            var oModel = new JSONModel();
+            oModel.setData({
+                "orderData": {
+                    "SoId": "",
+                    "CreatedBy": "400000038",
+                    "BuyerId": "100000002",
+                    "BuyerName": "DelBont Industries",
+                    "CurrencyCode": "USD",
+                    "GrossAmount": "0.0",
+                    "LifecycleStatus": "N",
+                    "To_Items": [
+                    ]
+                }
+            });
+            this.oLocalModel = oModel;
+            this.getView().setModel(this.oLocalModel, "ord");
+
+        },
+        addItem : function(){
+            var item = {
+                "SoId": "",
+                "SoItemPos": "",
+                "ProductId": "",
+                "Note": "",
+                "CurrencyCode": "USD",
+                "GrossAmount": "0.0",
+                "Quantity": "1",
+                "QuantityUnit": "EA"
+            };
+            var aItems = this.oLocalModel.getProperty("/orderData/To_Items");
+            aItems.push(item);
+            this.oLocalModel.setProperty("/orderData/To_Items", aItems);
+
         },
         supplierPopup: null,
         onF4Help: function(){
